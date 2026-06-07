@@ -10,15 +10,24 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+        <!-- Sidebar -->
+        <aside class="fixed left-0 top-0 w-64 h-screen text-white flex flex-col" style="background-color: #52046e;">
+            <div class="p-6 text-2xl font-bold border-b border-gray-700">
+                Logo
+            </div>
 
-            <!-- Page Heading -->
+            @include('layouts.navigation')
+        </aside>
+        <div class="ml-64 min-h-screen bg-white">
             @isset($header)
                 <header class="bg-white shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -26,9 +35,7 @@
                     </div>
                 </header>
             @endisset
-
-            <!-- Page Content -->
-            <main>
+            <main class="p-6">
                 {{ $slot }}
             </main>
         </div>

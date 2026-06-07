@@ -18,11 +18,6 @@ class TagihanController extends Controller
         } else {
             $query->latest();
         }
-        // if ($request->search) {
-        //     $query->where(function ($q) use ($request) {
-        //         $q->where('nama_pelanggan', 'like', '%' . $request->search . '%');
-        //     });
-        // }
         $pelanggans = Pelanggan::all();
         $tagihans = Tagihan::with('pelanggan')->paginate(10);
         return view('tagihan.index', compact('tagihans', 'pelanggans'));

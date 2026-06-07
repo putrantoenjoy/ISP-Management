@@ -25,8 +25,8 @@
                 </select>
             </div>
             <div class="flex justify-end gap-2 pt-2">
-                <button type="button" @click="openEdit = false" class="px-4 py-2 bg-gray-300 rounded">Batal</button>
-                <button type="submit" class="px-4 py-2 bg-[#6c0ba9] text-white rounded">Update</button>
+                <button type="button" @click="openEdit = false" class="text-sm px-3 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>
+                <button type="submit" class="text-sm px-3 py-2 bg-[#6c0ba9] text-white rounded hover:bg-[#5a098c]">Update</button>
             </div>
         </form>
     </div>

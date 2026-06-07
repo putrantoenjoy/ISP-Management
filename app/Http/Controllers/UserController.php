@@ -9,9 +9,32 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::whereNull('deleted_at')->get();
+        $query = User::query();
+
+        $currentUser = auth()->user();
+        if (
+            $currentUser->role === 'admin' &&
+            $currentUser->name !== 'Administrator'
+        ) {
+            $query->where(function ($q) use ($currentUser) {
+                $q->where('role', 'staff')
+                ->orWhere('id', $currentUser->id);
+            });
+        }
+        if ($request->sort && $request->direction) {
+            $query->orderBy($request->sort, $request->direction);
+        } else {
+            $query->latest();
+        }
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%');
+            });
+        }
+        $users = $query->paginate(10)->withQueryString();
         return view('user.index', compact('users'));
     }
     public function create()

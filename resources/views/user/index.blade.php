@@ -8,11 +8,13 @@
         </x-slot>
         <div class="flex items-center justify-between mb-4">
             <button @click="open = true" class="bg-[#6c0ba9] hover:bg-[#880ed4] text-white px-4 text-sm py-2 rounded"> <i class="bi bi-plus-circle"></i> Tambah User</button>
-            <input type="text" placeholder="Cari..." class="text-sm border border-[#6c0ba9] focus:ring-2 focus:ring-[#880ed4] outline-none rounded py-2 px-4">
+            <form method="GET" action="{{ route('user.index') }}" x-data x-ref="searchForm">
+                <input x-init="$el.focus()" type="text" name="search" value="{{ request('search') }}" placeholder="Cari..." class="text-sm border border-[#6c0ba9] focus:ring-2 focus:ring-[#880ed4] outline-none rounded py-2 px-4" @input.debounce.500ms="$refs.searchForm.submit()">
+            </form>
         </div>
         <div class="relative overflow-x-auto bg-white shadow-none rounded-lg border border-gray-200" style="margin-top: 1rem;">
             <table class="w-full text-sm text-left">
-                <thead class="bg-gray-100 border-b border-gray-200">
+                <thead class="bg-purple-100 border-b border-purple-200">
                     <tr style="background: linear-gradient(to bottom, #f7edff 0%, #faf5ff 40%, #ffffff 100%);">
                         <th scope="col" class="p-4">
                             <div class="flex items-center">
@@ -21,24 +23,47 @@
                                 <label for="table-checkbox" class="sr-only">Table checkbox</label>
                             </div>
                         </th>
-                        <th scope="col" class="px-6 py-3 font-medium font-semibold text-[#6c0ba9]">
-                            Nama
+                        <th class="px-6 py-3 font-medium text-[#6c0ba9]">
+                            <a href="{{ route('user.index', [ 'sort' => 'name', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                                <div>
+                                    <i class="bi bi-person-circle me-1"></i>
+                                    <span>Nama</span>
+                                </div>
+                                <i class="bi bi-filter-right"></i>
+                            </a>
+                        </th>
+                        <th class="px-6 py-3">
+                            <a href="{{ route('user.index', [ 'sort' => 'email', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                                <div>
+                                    <i class="bi bi-envelope me-1"></i>
+                                    <span>Email</span>
+                                </div>
+                                <i class="bi bi-filter-right"></i>
+                            </a>
+                        </th>
+                        <th class="px-6 py-3 font-medium text-[#6c0ba9]">
+                            <div class="flex justify-between items-center w-full">
+                                <div>
+                                    <i class="bi bi-shield-lock me-1"></i>
+                                    <span>Role</span>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="px-6 py-3 font-medium text-[#6c0ba9]">
+                            <a href="{{ route('user.index', [ 'sort' => 'created_at', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                                <div>
+                                    <i class="bi bi-calendar me-1"></i>
+                                    <span>Tanggal Dibuat</span>
+                                </div>
+                                <i class="bi bi-filter-right"></i>
+                            </a>
                         </th>
                         <th scope="col" class="px-6 py-3 font-medium font-semibold text-[#6c0ba9]">
-                            Email
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium font-semibold text-[#6c0ba9]">
-                            Role
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium font-semibold text-[#6c0ba9]">
-                            Tanggal Dibuat
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium font-semibold text-[#6c0ba9]">
-                            Action
+                            <i class="bi bi-gear"></i> Action
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-purple-200">
                     @foreach ($users as $user)
                         <tr class="group hover:bg-[#6c0ba9] hover:text-white text-dark transition">
                             <td class="w-4 p-4">
@@ -56,7 +81,11 @@
                                 {{ $user->email }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $user->role }}
+                                @if($user->role === 'admin')
+                                    <span class="px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded">Admin</span>
+                                @else
+                                    <span class="px-2 py-1 text-xs font-semibold text-white bg-blue-500 rounded">{{ $user->role }}</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4">
                                 {{ $user->created_at->format('d-m-Y') }}
@@ -66,7 +95,7 @@
                                 <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus user ini?')" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    @if($user->name === 'Administrator')
+                                    @if($user->id === auth()->id())
                                     <button type="submit" disabled class="ms-3 font-medium text-gray-400 cursor-not-allowed">
                                         <i class="bi bi-trash"></i> Remove
                                     </button>
@@ -82,6 +111,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="mt-4">
+            {{ $users->links('components.pagination') }}
         </div>
         @include('user.create')
         @include('user.edit')

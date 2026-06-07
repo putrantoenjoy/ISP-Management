@@ -3,10 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pelanggan;
 
 class Tagihan extends Model
 {
     //
+    protected $casts = [
+        'periode_tagihan' => 'date',
+        'tanggal_pembayaran' => 'date',
+    ];
     protected $fillable = [
         'pelanggan_id',
         'periode_tagihan',
@@ -16,6 +21,6 @@ class Tagihan extends Model
     ];
     public function pelanggan()
     {
-        return this->belongsTo(Pelanggan::class);
+        return $this->belongsTo(Pelanggan::class);
     }
 }

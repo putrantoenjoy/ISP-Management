@@ -9,20 +9,26 @@
             @method('PUT')
             <div>
                 <label class="block text-sm font-medium">Nama</label>
-                <input type="text" name="name" x-model="selectedUser.name" class="w-full border rounded px-3 py-2">
+                <input type="text" name="name" placeholder="nama" x-model="selectedUser.name" class="w-full border rounded px-3 py-2">
             </div>
             <div>
                 <label class="block text-sm font-medium">Email</label>
-                <input type="email" name="email" x-model="selectedUser.email" class="w-full border rounded px-3 py-2">
+                <input type="email" name="email" placeholder="email" x-model="selectedUser.email" class="w-full border rounded px-3 py-2">
             </div>
             <div>
                 <label class="block text-sm font-medium">Role</label>
-                <select name="role"
-                        x-model="selectedUser.role"
-                        class="w-full border rounded px-3 py-2">
+                <select name="role" x-model="selectedUser.role" class="w-full border rounded px-3 py-2">
                     <option value="staff">Staff</option>
                     <option value="admin">Admin</option>
                 </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Password</label>
+                <input type="password" name="password" placeholder="password" class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" placeholder="konfirmasi password" class="w-full border rounded px-3 py-2">
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button type="button" @click="openEdit = false" class="text-sm px-3 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>

@@ -5,11 +5,11 @@
             @csrf
             <div>
                 <label class="block text-sm font-medium">Nama</label>
-                <input type="text" name="name" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
+                <input type="text" name="name" placeholder="nama" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
             </div>
             <div>
                 <label class="block text-sm font-medium">Email</label>
-                <input type="email" name="email" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
+                <input type="email" name="email" placeholder="email" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
             </div>
             <div>
                 <label class="block text-sm font-medium">Role</label>
@@ -20,7 +20,11 @@
             </div>
             <div>
                 <label class="block text-sm font-medium">Password</label>
-                <input type="password" name="password" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
+                <input type="password" name="password" placeholder="password" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" placeholder="konfirmasi password" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button type="button" @click="open = false" class="text-sm px-3 py-2 bg-gray-300 rounded hover:bg-gray-400">Batal</button>

@@ -13,7 +13,7 @@ class Pelanggan extends Model
         'alamat',
         'paket_internet',
         'harga_paket',
-        'status'
+        'status_pelanggan'
     ];
     public function tagihan()
     {

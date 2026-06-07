@@ -21,18 +21,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/user', [UserController::class, 'store'])->name('user.store');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-});
-
-Route::middleware('auth')->group(function () {
-    // pelanggan
-    Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
-    // tagihan
-    Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+    });
     
-    // profil
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware('auth')->group(function () {
+        // pelanggan
+        Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');
+        Route::post('/pelanggan', [PelangganController::class, 'store'])->name('pelanggan.store');
+        Route::put('/pelanggan/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
+        Route::delete('/pelanggan/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+        // tagihan
+        Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+        Route::post('/tagihan', [TagihanController::class, 'store'])->name('tagihan.store');
+        Route::patch('/tagihan/{id}', [TagihanController::class, 'update'])->name('tagihan.update');
+        Route::delete('/tagihan/{id}', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
 });
 
 require __DIR__.'/auth.php';

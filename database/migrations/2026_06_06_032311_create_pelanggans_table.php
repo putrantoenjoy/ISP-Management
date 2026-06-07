@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('alamat');
             $table->string('paket_internet');
             $table->unsignedInteger('harga_paket');
-            $table->enum('status', ['aktif', 'suspend', 'putus'])->default('aktif');
+            $table->enum('status_pelanggan', ['aktif', 'suspend', 'putus'])->default('aktif');
             $table->timestamps();
         });
     }

@@ -9,17 +9,13 @@
         <i class="bi bi-person-circle"></i> {{ __('User') }}
     </a>
     @endif
-    <a href="{{ route('tagihan.index') }}"
-       class="block px-6 py-3 text-white {{ request()->routeIs('tagihan.index') ? 'bg-[#6c0ba9]' : 'hover:bg-[#6c0ba9]' }}">
-        <i class="bi bi-cash"></i> {{ __('Tagihan') }}
-    </a>
     <a href="{{ route('pelanggan.index') }}"
        class="block px-6 py-3 text-white {{ request()->routeIs('pelanggan.index') ? 'bg-[#6c0ba9]' : 'hover:bg-[#6c0ba9]' }}">
         <i class="bi bi-people"></i> {{ __('Pelanggan') }}
     </a>
-    <a href="{{ route('profile.edit') }}"
-       class="block px-6 py-3 text-white {{ request()->routeIs('profile.edit') ? 'bg-[#6c0ba9]' : 'hover:bg-[#6c0ba9]' }}">
-        <i class="bi bi-person"></i> {{ __('Profile') }}
+    <a href="{{ route('tagihan.index') }}"
+       class="block px-6 py-3 text-white {{ request()->routeIs('tagihan.index') ? 'bg-[#6c0ba9]' : 'hover:bg-[#6c0ba9]' }}">
+        <i class="bi bi-cash"></i> {{ __('Tagihan') }}
     </a>
 </nav>
 <div class="mt-auto border-t border-gray-700">

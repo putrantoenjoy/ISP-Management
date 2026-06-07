@@ -30,26 +30,20 @@ class UserController extends Controller
         }
         if ($request->search) {
             $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%');
+                $q->where('name', 'like', '%' . $request->search . '%');
             });
         }
         $users = $query->paginate(10)->withQueryString();
         return view('user.index', compact('users'));
-    }
-    public function create()
-    {
-        return view('user.create');
     }
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required|string',
-            'password' => 'required|min:6',
+            'role' => 'required|string|in:admin,staff',
+            'password' => 'required|min:6|confirmed',
         ]);
-
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -61,15 +55,28 @@ class UserController extends Controller
     }
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|string|in:admin,staff',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+
         $user = User::findOrFail($id);
 
-        $user->update([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
-        ]);
+        ];
 
-        return redirect()->route('user.index');
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('user.index')->with('success', 'User berhasil diubah');
     }
     public function destroy($id)
     {
@@ -81,7 +88,6 @@ class UserController extends Controller
         }
         $user->delete();
 
-        return redirect()->route('user.index')
-            ->with('success', 'User berhasil dihapus');
+        return redirect()->route('user.index')->with('success', 'User berhasil dihapus');
     }
 }

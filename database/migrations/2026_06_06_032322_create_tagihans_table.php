@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('pelanggan_id');
             $table->string('periode_tagihan');
             $table->unsignedInteger('nominal_tagihan');
-            $table->enum('status_pembayaran', ['belum_lunas', 'lunas'])->default('belum_lunas');
+            $table->enum('status_pembayaran', ['belum lunas', 'lunas'])->default('belum lunas');
             $table->date('tanggal_pembayaran');
             $table->timestamps();
         });

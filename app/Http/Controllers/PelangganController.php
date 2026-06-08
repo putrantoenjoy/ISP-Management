@@ -59,9 +59,12 @@ class PelangganController extends Controller
     }
     public function destroy($id)
     {
-        $pelanggan = Pelanggan::findOrFail($id);
-        $pelanggan->delete();
-
-        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil dihapus.');
+        if(auth()->user()->role === 'admin') {
+            $pelanggan = Pelanggan::findOrFail($id);
+            $pelanggan->delete();
+            return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil dihapus.');
+        } else {
+            return redirect()->route('pelanggan.index')->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
+        }
     }
 }

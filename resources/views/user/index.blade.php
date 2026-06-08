@@ -51,7 +51,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('user.index', [ 'sort' => 'name', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('user.index', [ 'sort' => 'name', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-person-circle me-1"></i>
                                     <span>Nama</span>
@@ -60,7 +60,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3">
-                            <a href="{{ route('user.index', [ 'sort' => 'email', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('user.index', [ 'sort' => 'email', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-envelope me-1"></i>
                                     <span>Email</span>
@@ -77,7 +77,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('user.index', [ 'sort' => 'created_at', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('user.index', [ 'sort' => 'created_at', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-calendar me-1"></i>
                                     <span>Tanggal Dibuat</span>

@@ -51,7 +51,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('tagihan.index', [ 'sort' => 'pelanggan.nama', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('tagihan.index', [ 'sort' => 'pelanggan.nama', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-person me-1"></i>
                                     <span>Pelanggan</span>
@@ -60,7 +60,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('tagihan.index', [ 'sort' => 'periode_tagihan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('tagihan.index', [ 'sort' => 'periode_tagihan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-cash me-1"></i>
                                     <span>Periode Tagihan</span>
@@ -69,7 +69,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('tagihan.index', [ 'sort' => 'nominal_tagihan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('tagihan.index', [ 'sort' => 'nominal_tagihan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-currency-dollar me-1"></i>
                                     <span>Nominal Tagihan</span>
@@ -78,7 +78,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('tagihan.index', [ 'sort' => 'status_pembayaran', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('tagihan.index', [ 'sort' => 'status_pembayaran', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-check-circle me-1"></i>
                                     <span>Status Pembayaran</span>
@@ -87,7 +87,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('tagihan.index', [ 'sort' => 'tanggal_pembayaran', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('tagihan.index', [ 'sort' => 'tanggal_pembayaran', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-calendar me-1"></i>
                                     <span>Tanggal Pembayaran</span>
@@ -124,7 +124,7 @@
                                 {{ $tagihan->status_pembayaran === 'lunas' ? 'Lunas' : 'Belum Lunas' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $tagihan->tanggal_pembayaran?->format('d M Y') }}
+                                {{ $tagihan->tanggal_pembayaran?->format('d M Y') ?? '-' }}
                             </td>
                             <td class="flex items-center px-6 py-4">
                                 <form action="{{ route('tagihan.update', $tagihan->id) }}" method="POST"

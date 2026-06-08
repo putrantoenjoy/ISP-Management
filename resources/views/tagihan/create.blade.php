@@ -6,8 +6,8 @@
             <div>
                 <label class="block text-sm font-medium">Nama Pelanggan</label>
                 <select name="pelanggan_id" class="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-[#880ed4] outline-none">
-                    @foreach ($pelanggans as $pelanggan)
-                        <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama_pelanggan }}</option>
+                    @foreach ($tagihans as $tagihan)
+                        <option value="{{ $tagihan->pelanggan->id }}">{{ $tagihan->pelanggan->nama_pelanggan }}</option>
                     @endforeach
                 </select>
             </div>

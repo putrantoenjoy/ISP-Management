@@ -31,11 +31,19 @@
             </h2>
         </div>
     </div>
-    <div class="mt-6 bg-white border rounded-lg p-4 shadow-sm">
-        <p class="text-sm text-gray-500">Total Tagihan Belum Bayar</p>
-        <h2 class="text-2xl font-bold text-orange-500">
-            <i class="bi bi-cash-stack"></i> Rp {{ number_format($totalTagihan, 0, ',', '.') }}
-        </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 bg-white">
+        <div class="bg-white border rounded-lg p-4 shadow-sm">
+            <p class="text-sm text-gray-500">Total Tagihan Sudah Bayar</p>
+            <h2 class="text-2xl font-bold text-green-500">
+                <i class="bi bi-cash-stack"></i> Rp {{ number_format($totalTagihanSudahBayar, 0, ',', '.') }}
+            </h2>
+        </div>
+        <div class="bg-white border rounded-lg p-4 shadow-sm">
+            <p class="text-sm text-gray-500">Total Tagihan Belum Bayar</p>
+            <h2 class="text-2xl font-bold text-red-500">
+                <i class="bi bi-cash-stack"></i> Rp {{ number_format($totalTagihanBelumBayar, 0, ',', '.') }}
+            </h2>
+        </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <div class="bg-white border rounded-lg shadow-sm p-4">
@@ -59,7 +67,6 @@
                         <span>Suspend</span>
                         <span>{{ $pelangganSuspend }} ({{ round($suspendPercent) }}%)</span>
                     </div>
-
                     <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
                         <div class="bg-yellow-500 h-4 rounded-full transition-all duration-700"
                             style="width: {{ $suspendPercent }}%">

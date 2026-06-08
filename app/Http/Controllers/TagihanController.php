@@ -11,16 +11,29 @@ class TagihanController extends Controller
     //
     public function index(Request $request)
     {
-        $query = Tagihan::query();
+        $query = Tagihan::with('pelanggan');
 
         if ($request->sort && $request->direction) {
-            $query->orderBy($request->sort, $request->direction);
+            if ($request->sort == 'pelanggan.nama') {
+                $query->join('pelanggans', 'tagihans.pelanggan_id', '=', 'pelanggans.id')
+                    ->orderBy('pelanggans.nama_pelanggan', $request->direction)
+                    ->select('tagihans.*');
+            } else {
+                $query->orderBy($request->sort, $request->direction);
+            }
         } else {
             $query->latest();
         }
-        $pelanggans = Pelanggan::all();
-        $tagihans = Tagihan::with('pelanggan')->paginate(10);
-        return view('tagihan.index', compact('tagihans', 'pelanggans'));
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->whereHas('pelanggan', function ($q2) use ($request) {
+                    $q2->where('nama_pelanggan', 'like', '%' . $request->search . '%');
+                });
+            });
+        }
+        $tagihans = $query->paginate(10)->withQueryString();;
+
+        return view('tagihan.index', compact('tagihans'));
     }
     public function store(Request $request)
     {
@@ -38,12 +51,16 @@ class TagihanController extends Controller
     }
     public function update(Request $request, $id)
     {
+        if(auth()->user()->role === 'admin') {
         $tagihan = Tagihan::findOrFail($id);
         $tagihan->update([
             'status_pembayaran' => 'lunas',
             'tanggal_pembayaran' => now(),
         ]);
-        return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil diperbarui.');
+            return redirect()->route('tagihan.index')->with('success', 'Tagihan berhasil diperbarui.');
+        }else{
+            return redirect()->route('tagihan.index')->with('error', 'Anda tidak memiliki izin untuk melakukan tindakan ini.');
+        }
     }
     public function destroy($id)
     {

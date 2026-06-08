@@ -31,13 +31,14 @@ Route::middleware('auth')->group(function () {
         $pelangganAktif = Pelanggan::where('status_pelanggan', 'aktif')->count();
         $pelangganSuspend = Pelanggan::where('status_pelanggan', 'suspend')->count();
         $pelangganPutus = Pelanggan::where('status_pelanggan', 'putus')->count();
-        $totalTagihan = Tagihan::sum('nominal_tagihan');
+        $totalTagihanSudahBayar = Tagihan::where('status_pembayaran', 'lunas')->sum('nominal_tagihan');
+        $totalTagihanBelumBayar = Tagihan::where('status_pembayaran', 'belum lunas')->sum('nominal_tagihan');
         $total = $pelangganAktif + $pelangganSuspend + $pelangganPutus;
         $aktifPercent = $total ? ($pelangganAktif / $total) * 100 : 0;
         $suspendPercent = $total ? ($pelangganSuspend / $total) * 100 : 0;
         $putusPercent = $total ? ($pelangganPutus / $total) * 100 : 0;
 
-        return view('dashboard', compact('totalPelanggan', 'pelangganAktif', 'pelangganSuspend', 'pelangganPutus', 'totalTagihan', 'aktifPercent', 'suspendPercent', 'putusPercent'));})
+        return view('dashboard', compact('totalPelanggan', 'pelangganAktif', 'pelangganSuspend', 'pelangganPutus', 'totalTagihanSudahBayar', 'totalTagihanBelumBayar', 'aktifPercent', 'suspendPercent', 'putusPercent'));})
         ->name('dashboard');
     // pelanggan
     Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan.index');

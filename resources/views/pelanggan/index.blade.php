@@ -32,6 +32,16 @@
                     <button type="button" onclick="this.parentElement.remove()" class="ml-4 text-green-500 transition hover:text-green-700"><i class="bi bi-x-circle"></i></button>
                 </div>
             @endif
+            @if(session('error'))
+                 <div class="mb-4 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800 shadow-sm" role="alert">
+                    <div class="flex items-center gap-3">
+                        <span class="font-medium">
+                           <i class="bi bi-x-circle"></i> {{ session('error') }}
+                        </span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="ml-4 text-red-500 transition hover:text-red-700"><i class="bi bi-x-circle"></i></button>
+                </div>
+            @endif
             <div class="flex items-center justify-between mb-4">
                 <button @click="open = true" class="bg-[#6c0ba9] hover:bg-[#880ed4] text-white px-4 text-sm py-2 rounded"> <i class="bi bi-plus-circle"></i> Tambah Pelanggan</button>
                 <form method="GET" action="{{ route('pelanggan.index') }}" x-data x-ref="searchForm">
@@ -51,7 +61,7 @@
                             </div>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'nama_pelanggan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'nama_pelanggan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-person-circle me-1"></i>
                                     <span>Nama Pelanggan</span>
@@ -60,7 +70,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'nomor_telepon', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'nomor_telepon', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-telephone me-1"></i>
                                     <span>Nomor Telepon</span>
@@ -69,7 +79,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'alamat', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'alamat', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-geo-alt me-1"></i>
                                     <span>Alamat</span>
@@ -78,7 +88,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'paket_internet', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'paket_internet', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-wifi me-1"></i>
                                     <span>Paket Internet</span>
@@ -87,7 +97,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'harga_paket', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'harga_paket', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-currency-dollar me-1"></i>
                                     <span>Harga Paket</span>
@@ -96,7 +106,7 @@
                             </a>
                         </th>
                         <th class="px-6 py-3 font-medium text-[#6c0ba9]">
-                            <a href="{{ route('pelanggan.index', [ 'sort' => 'status_pelanggan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
+                            <a href="{{ route('pelanggan.index', [ 'sort' => 'status_pelanggan', 'direction' => request('direction') == 'asc' ? 'desc' : 'asc', 'search' => request('search'), 'page' => request('page')]) }}" class="flex justify-between items-center w-full text-[#6c0ba9]">
                                 <div>
                                     <i class="bi bi-check-circle me-1"></i>
                                     <span>Status Pelanggan</span>
@@ -133,7 +143,7 @@
                                 {{ $pelanggan->paket_internet }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $pelanggan->harga_paket }}
+                                Rp {{ number_format($pelanggan->harga_paket, 0, ',', '.') }}
                             </td>
                             <td class="px-6 py-4">
                                 @if($pelanggan->status_pelanggan === 'aktif')
@@ -152,14 +162,13 @@
                             </td>
                             <td class="flex items-center px-6 py-4">
                                 <a href="#" @click.prevent="openEdit = true; selectedPelanggan = {{ $pelanggan }}" class="flex items-center gap-1 font-medium text-[#6c0ba9] group-hover:text-white transition"><i class="bi bi-pencil"></i>Edit</a>
+                                @if(auth()->user()->role === 'admin')
                                 <form action="{{ route('pelanggan.destroy', $pelanggan->id) }}" method="POST" onsubmit="return confirm('Yakin mau hapus pelanggan ini?')" class="inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit"
-                                        class="ms-3 font-medium text-red-600 hover:text-white transition">
-                                         <i class="bi bi-trash"></i> Remove
-                                    </button>
+                                    <button type="submit" class="ms-3 font-medium text-red-600 hover:text-white transition"><i class="bi bi-trash"></i> Remove</button>
                                 </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

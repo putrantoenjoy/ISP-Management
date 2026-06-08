@@ -48,7 +48,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <div class="bg-white border rounded-lg shadow-sm p-4">
             <h3 class="text-[#6c0ba9] font-semibold mb-4">
-                Statistik Pelanggan (Bar Chart)
+                Statistik Pelanggan
             </h3>
             <div class="space-y-4">
                 <div>
@@ -84,62 +84,111 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    
+                </div>
             </div>
         </div>
         <div class="bg-white border rounded-lg shadow-sm p-4">
             <h3 class="text-[#6c0ba9] font-semibold mb-4">
-                Pertumbuhan Pelanggan (Line Chart)
+                Grafik Total Tagihan per Bulan
             </h3>
-            <div class="flex items-end justify-center gap-2 h-40">
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-10"></div>
-                    <span class="text-xs mt-1">Jan</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-16"></div>
-                    <span class="text-xs mt-1">Feb</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-24"></div>
-                    <span class="text-xs mt-1">Mar</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-20"></div>
-                    <span class="text-xs mt-1">Apr</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-28"></div>
-                    <span class="text-xs mt-1">Mei</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Jun</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Jul</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Agt</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Sep</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Okt</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Nov</span>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="bg-[#6c0ba9] w-8 h-32"></div>
-                    <span class="text-xs mt-1">Des</span>
-                </div>
-            </div>
+            <div id="chart" class="relative h-64 w-full border-b"></div>
         </div>
+        @php
+            $labels = $data->map(fn($item) =>
+                \Carbon\Carbon::createFromFormat('Y-m', $item->periode)->format('M')
+            );
+            $values = $data->map(fn($item) => $item->total_nominal);
+        @endphp
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+        <script>
+        $(function () {
+
+            const labels = {!! json_encode($labels) !!};
+            const values = {!! json_encode($values) !!};
+
+            const $chart = $("#chart");
+
+            const width = $chart.width();
+            const height = $chart.height();
+
+            const max = Math.max(...values);
+            const min = Math.min(...values);
+            const range = max - min || 1;
+
+            function getX(i) {
+                return (i / (values.length - 1)) * (width - 40) + 20;
+            }
+
+            function getY(val) {
+                return height - ((val - min) / range) * (height - 40) - 20;
+            }
+            $chart.empty();
+            let points = [];
+            values.forEach((val, i) => {
+                const x = getX(i);
+                const y = getY(val);
+
+                points.push({ x, y });
+                $chart.append(`
+                    <div class="dot"
+                        title="${labels[i]}: Rp ${val.toLocaleString('id-ID')}"
+                        style="
+                            position:absolute;
+                            width:10px;
+                            height:10px;
+                            background:#6c0ba9;
+                            border-radius:50%;
+                            left:${x}px;
+                            top:${y}px;
+                            transform:translate(-50%, -50%);
+                            cursor:pointer;
+                        ">
+                    </div>
+                `);
+
+                $chart.append(`
+                    <div style="
+                        position:absolute;
+                        left:${x}px;
+                        bottom:-20px;
+                        transform:translateX(-50%);
+                        font-size:12px;
+                        color:#666;
+                    ">
+                        ${labels[i]}
+                    </div>
+                `);
+            });
+
+            for (let i = 0; i < points.length - 1; i++) {
+
+                const x1 = points[i].x;
+                const y1 = points[i].y;
+                const x2 = points[i + 1].x;
+                const y2 = points[i + 1].y;
+
+                const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+
+                $chart.append(`
+                    <div style="
+                        position:absolute;
+                        width:${length}px;
+                        height:2px;
+                        background:#6c0ba9;
+                        left:${x1}px;
+                        top:${y1}px;
+                        transform-origin:0 0;
+                        transform:rotate(${angle}deg);
+                    "></div>
+                `);
+            }
+
+        });
+        </script>
     </div>
 </x-app-layout>

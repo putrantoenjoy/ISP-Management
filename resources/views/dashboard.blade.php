@@ -9,32 +9,32 @@
         <div class="bg-white border rounded-lg p-4 shadow-sm">
             <p class="text-sm text-gray-500">Total Pelanggan</p>
             <h2 class="text-lg font-bold text-[#6c0ba9]">
-                <i class="bi bi-people"></i> 120
+                <i class="bi bi-people"></i> {{ $totalPelanggan }}
             </h2>
         </div>
         <div class="bg-white border rounded-lg p-4 shadow-sm">
             <p class="text-sm text-gray-500">Pelanggan Aktif</p>
             <h2 class="text-lg font-bold text-green-600">
-                <i class="bi bi-check-circle"></i> 90
+                <i class="bi bi-check-circle"></i> {{ $pelangganAktif }}
             </h2>
         </div>
         <div class="bg-white border rounded-lg p-4 shadow-sm">
             <p class="text-sm text-gray-500">Pelanggan Suspend</p>
             <h2 class="text-lg font-bold text-yellow-600">
-                <i class="bi bi-pause-circle-fill"></i> 20
+                <i class="bi bi-pause-circle-fill"></i> {{ $pelangganSuspend }}
             </h2>
         </div>
         <div class="bg-white border rounded-lg p-4 shadow-sm">
             <p class="text-sm text-gray-500">Pelanggan Putus</p>
             <h2 class="text-lg font-bold text-red-600">
-                <i class="bi bi-x-circle-fill"></i> 10
+                <i class="bi bi-x-circle-fill"></i> {{ $pelangganPutus }}
             </h2>
         </div>
     </div>
     <div class="mt-6 bg-white border rounded-lg p-4 shadow-sm">
         <p class="text-sm text-gray-500">Total Tagihan Belum Bayar</p>
         <h2 class="text-2xl font-bold text-orange-500">
-            <i class="bi bi-cash-stack"></i> Rp 2.500.000
+            <i class="bi bi-cash-stack"></i> Rp {{ number_format($totalTagihan, 0, ',', '.') }}
         </h2>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
@@ -42,35 +42,41 @@
             <h3 class="text-[#6c0ba9] font-semibold mb-4">
                 Statistik Pelanggan (Bar Chart)
             </h3>
-            <div class="space-y-3">
+            <div class="space-y-4">
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span>Aktif</span>
-                        <span>90%</span>
+                        <span>{{ $pelangganAktif }} ({{ round($aktifPercent) }}%)</span>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-4">
-                        <div class="bg-green-500 h-4 rounded-full" style="width: 90%"></div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div class="bg-green-500 h-4 rounded-full transition-all duration-700"
+                            style="width: {{ $aktifPercent }}%">
+                        </div>
                     </div>
                 </div>
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span>Suspend</span>
-                        <span>20%</span>
+                        <span>{{ $pelangganSuspend }} ({{ round($suspendPercent) }}%)</span>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-4">
-                        <div class="bg-yellow-500 h-4 rounded-full" style="width: 20%"></div>
+
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div class="bg-yellow-500 h-4 rounded-full transition-all duration-700"
+                            style="width: {{ $suspendPercent }}%">
+                        </div>
                     </div>
                 </div>
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span>Putus</span>
-                        <span>10%</span>
+                        <span>{{ $pelangganPutus }} ({{ round($putusPercent) }}%)</span>
                     </div>
-                    <div class="w-full bg-gray-200 rounded-full h-4">
-                        <div class="bg-red-500 h-4 rounded-full" style="width: 10%"></div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div class="bg-red-500 h-4 rounded-full transition-all duration-700"
+                            style="width: {{ $putusPercent }}%">
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="bg-white border rounded-lg shadow-sm p-4">

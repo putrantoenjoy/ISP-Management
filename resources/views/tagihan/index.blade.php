@@ -124,7 +124,7 @@
                                 {{ $tagihan->status_pembayaran === 'lunas' ? 'Lunas' : 'Belum Lunas' }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $tagihan->tanggal_pembayaran->format('d M Y') }}
+                                {{ $tagihan->tanggal_pembayaran?->format('d M Y') }}
                             </td>
                             <td class="flex items-center px-6 py-4">
                                 <form action="{{ route('tagihan.update', $tagihan->id) }}" method="POST"
@@ -155,6 +155,5 @@
             {{ $tagihans->links('components.pagination') }}
         </div>
         @include('tagihan.create')
-        @include('tagihan.edit')
     </div>
 </x-app-layout>

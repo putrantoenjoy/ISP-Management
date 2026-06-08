@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('periode_tagihan');
             $table->unsignedInteger('nominal_tagihan');
             $table->enum('status_pembayaran', ['belum lunas', 'lunas'])->default('belum lunas');
-            $table->date('tanggal_pembayaran');
+            $table->date('tanggal_pembayaran')->nullable();
             $table->timestamps();
         });
     }

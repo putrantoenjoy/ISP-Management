@@ -19,10 +19,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <!-- Sidebar -->
         <aside class="fixed left-0 top-0 w-64 h-screen text-white flex flex-col" style="background-color: #52046e;">
-            <div class="p-6 text-2xl font-bold border-b border-gray-700">
-                Logo
+            <div class="p-6 text-2xl font-bold border-b border-gray-700 text-center">
+                <span>ISP Management</span>
             </div>
 
             @include('layouts.navigation')

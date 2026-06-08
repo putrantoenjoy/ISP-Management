@@ -32,6 +32,16 @@
                     <button type="button" onclick="this.parentElement.remove()" class="ml-4 text-green-500 transition hover:text-green-700"><i class="bi bi-x-circle"></i></button>
                 </div>
             @endif
+            @if(session('error'))
+                 <div class="mb-4 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-800 shadow-sm" role="alert">
+                    <div class="flex items-center gap-3">
+                        <span class="font-medium">
+                           <i class="bi bi-x-circle"></i> {{ session('error') }}
+                        </span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="ml-4 text-red-500 transition hover:text-red-700"><i class="bi bi-x-circle"></i></button>
+                </div>
+            @endif
             <div class="flex items-center justify-between mb-4">
                 <button @click="open = true" class="bg-[#6c0ba9] hover:bg-[#880ed4] text-white px-4 text-sm py-2 rounded"> <i class="bi bi-plus-circle"></i> Tambah Tagihan</button>
                 <form method="GET" action="{{ route('tagihan.index') }}" x-data x-ref="searchForm">
@@ -132,17 +142,13 @@
                                     @csrf
                                     @method('PATCH')
                                     @if($tagihan->status_pembayaran === 'lunas')
-                                        <button type="submit"
-                                            class="flex items-center gap-1 px-3 py-1 rounded bg-green-400 text-white cursor-not-allowed">
-                                            <i class="bi bi-check-circle"></i>
-                                            Lunas
-                                        </button>
+                                        <button type="submit" class="flex items-center gap-1 px-3 py-1 rounded bg-green-400 text-white cursor-not-allowed"><i class="bi bi-check-circle"></i>Lunas</button>
                                     @else
-                                        <button type="submit"
-                                            class="flex items-center gap-1 px-3 py-1 rounded bg-[#6c0ba9] text-white hover:bg-white hover:text-[#6c0ba9] transition">
-                                            <i class="bi bi-check-circle"></i>
-                                            Bayar
-                                        </button>
+                                        @if(auth()->user()->role === 'admin')
+                                        <button type="submit" class="flex items-center gap-1 px-3 py-1 rounded bg-[#6c0ba9] text-white hover:bg-white hover:text-[#6c0ba9] transition"><i class="bi bi-check-circle"></i>Bayar</button>
+                                        @else
+                                        <button type="submit" class="flex disabled cursor-not-allowed items-center gap-1 px-3 py-1 rounded bg-[#6c0ba9] text-white hover:bg-white hover:text-[#6c0ba9] transition"><i class="bi bi-check-circle"></i>Bayar</button>
+                                        @endif
                                     @endif
                                 </form>
                             </td>

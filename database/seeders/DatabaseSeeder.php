@@ -15,11 +15,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // if (!User::where('role', 'admin')->exists()) {
-        //     $this->call(AdministratorSeeder::class);
-        // }
-        // $this->call(UserSeeder::class);
-        // $this->call(PelangganSeeder::class);
+        if (!User::where('role', 'admin')->exists()) {
+            $this->call(AdministratorSeeder::class);
+        }
+        $this->call(UserSeeder::class);
+        $this->call(PelangganSeeder::class);
         $this->call(TagihanSeeder::class);
     }
 }
